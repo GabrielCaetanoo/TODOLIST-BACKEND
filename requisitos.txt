@@ -1,0 +1,50 @@
+Eu como usuário quero poder adicionar uma tarefa.
+Eu como usuário quero poder editar uma tarefa.
+Eu como usuário quero poder excluir uma tarefa.
+Eu como usuário quero ver todas as tarefas.
+Eu como usuario quero ver os dados de uma tarefa.
+Eu como usuario quero marcar uma tarefa como concluída.
+Eu como usuario quero desmarcar uma tarefa concluida.
+
+
+
+----------------------------------------------------------------
+
+ROUTE - /task/add - Adicionar uma tarefa
+
+Não posso adicionar uma tarefa se eu não estiver logado.
+Não posso adicionar uma tarefa co uma data e hora que já passou.
+
+
+{
+    id
+    descricao
+    data
+    status - (Completed | in-progress)
+}
+
+----------------------------------------------------------------
+
+ROUTE - /task/update - Editar uma tarefa
+
+{
+    id
+    description
+    date
+    status - (Completed - in-progess)
+}
+
+----------------------------------------------------------------
+
+ROUTE - /task/delete/{id_task} - Excluir uma tarefas.
+
+----------------------------------------------------------------
+
+ROUTE - /task - Buscar todas as tarefas.
+
+----------------------------------------------------------------
+
+ROUTE - /task/{id_task} - Buscar dados de uma única tarefa.
+
+----------------------------------------------------------------
+

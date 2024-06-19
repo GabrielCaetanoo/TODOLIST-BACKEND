@@ -10,22 +10,22 @@ Eu como usuario quero desmarcar uma tarefa concluida.
 
 ----------------------------------------------------------------
 
-ROUTE - /task/add - Adicionar uma tarefa
+ROUTE - /task/ - Adicionar uma tarefa
 
 Não posso adicionar uma tarefa se eu não estiver logado.
 Não posso adicionar uma tarefa co uma data e hora que já passou.
 
 
 {
-    id
-    descricao
-    data
+    id - obrigatorio
+    descricao - obrigatorio
+    data - obrigatorio (VER COM PIO o que é e não é Obrigatorio)
     status - (Completed | in-progress)
 }
 
 ----------------------------------------------------------------
 
-ROUTE - /task/update - Editar uma tarefa
+ROUTE - /task/ - Editar uma tarefa
 
 {
     id
@@ -36,7 +36,7 @@ ROUTE - /task/update - Editar uma tarefa
 
 ----------------------------------------------------------------
 
-ROUTE - /task/delete/{id_task} - Excluir uma tarefas.
+ROUTE - /task/{id_task} - Excluir uma tarefas.
 
 ----------------------------------------------------------------
 

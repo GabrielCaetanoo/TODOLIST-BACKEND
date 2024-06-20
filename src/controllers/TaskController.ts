@@ -24,6 +24,22 @@ class TaskController{
             Res.json({error: "invalid status parameter"});
         }
     }
+
+    getById(Req: Request, Res: Response) {
+        const { id_task } = Req.params;
+
+        if (id_task) {
+
+            const result = taskService.getById(id_task);
+
+            Res.json(result);
+            Res.status(200);
+
+        }else{
+            Res.json({error:"invalid id_task param"});
+            Res.status(401);
+        }
+    }
     add(Req: Request, Res: Response){
         const {id, descricao, data, status} = Req.body;
 
@@ -42,6 +58,34 @@ class TaskController{
             Res.status(401);
         }
 
+    }
+
+    update(Req: Request, Res: Response) {
+        const { id, descricao, data, status } = Req.body;
+        const { id_task } = Req.params;
+
+        if (id && descricao && data && status && id_task) {
+
+            if(status === "in_progress" || status === "completed") {
+
+                const result = taskService.update(Req.body, id_task);
+
+                if(Object.keys(result).length > 0){
+                    Res.json(result);
+                }else{
+                    Res.json({error: "Task not found"});
+                    Res.status(404);
+                }
+
+            }else{
+                Res.json({error: "Invalid status parameter"});
+                Res.status(401);
+            }
+
+        }else{
+            Res.json({error: "Invalid parameters"});
+            Res.status(401);
+        }
     }
 }
 

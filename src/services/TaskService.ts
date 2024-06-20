@@ -5,8 +5,21 @@ import TaskRepository from '../repositories/TaskRepository';
 const taskRepository = new TaskRepository();
 
 class TaskService {
+    
     constructor() {
         
+    }
+    get(status: string) {
+       const result = taskRepository.get();
+
+       const tasks: Task[] = [];
+
+       result.map((obj) => { //MAPEAMENTO LOPING DE ITEM POR ITEM
+          if(obj.status === status){
+            tasks.push(obj);
+          }
+       })
+       return tasks;
     }
 
     add(data: Task): Task{

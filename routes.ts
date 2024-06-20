@@ -6,7 +6,7 @@ const taskController = new TaskController();
 
 const router = Router();
 
-router.get('/task', () => {console.log('test')});
+router.get('/task', taskController.get);
 router.get('/task/:id_task');
 router.post('/task', taskController.add);
 router.put('/task/:id_task');

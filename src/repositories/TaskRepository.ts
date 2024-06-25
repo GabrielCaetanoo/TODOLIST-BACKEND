@@ -21,6 +21,11 @@ class TaskRepository {
         this.tasks[position] = data;
         return data;
     }
+
+    delete(position: number){
+        delete this.tasks[position];
+        return position;
+    }
 }
 
 export default TaskRepository;

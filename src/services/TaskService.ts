@@ -67,6 +67,16 @@ class TaskService {
 
 
     }
+
+    delete(id_task: string) {
+      const position = this.getIndexById(id_task);
+
+      if(position !== 99999) {
+        return taskRepository.delete(position);
+      }else{
+        return {};
+    }
+    }
 }
 
 export default TaskService;

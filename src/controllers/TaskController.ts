@@ -14,6 +14,8 @@ class TaskController{
     get(Req: Request, Res: Response) {
         const { status } = Req.query;
 
+        console.log('teste');
+
         if( status && (status === "in_progress" || status === "completed")) {
 
             const result = taskService.get(status);

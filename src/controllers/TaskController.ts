@@ -2,6 +2,8 @@ import {Request, Response} from "express";
 
 import TaskService from "../services/TaskService";
 
+import { GetSchema } from "../schemas/TaskSchema";
+
 import { Task } from "../models/Task";
 
 const taskService = new TaskService();
@@ -11,20 +13,26 @@ class TaskController{
         
     }
 
-    get(Req: Request, Res: Response) {
-        const { status } = Req.query;
+   async get(Req: Request, Res: Response) {
+        
 
-        console.log('teste');
 
-        if( status && (status === "in_progress" || status === "completed")) {
+        try {
+            const  status  = Req.query.status;
+            await GetSchema.validate(status);
 
-            const result = taskService.get(status);
+            const result = taskService.get(status as string);
             Res.json(result);
             Res.status(200);
-
-        }else{
+        } catch (error) {
             Res.json({error: "invalid status parameter"});
+            Res.status(401);
         }
+
+  
+       
+
+        
     }
 
     getById(Req: Request, Res: Response) {
@@ -33,7 +41,6 @@ class TaskController{
         if (id_task) {
 
             const result = taskService.getById(id_task);
-
             Res.json(result);
             Res.status(200);
 

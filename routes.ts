@@ -18,7 +18,7 @@ const authMiddleware = (Req: Request, Res: Response , next: NextFunction) => {
 
 const router = Router();
 
-router.get('/task',authMiddleware, taskController.get);
+router.get('/task', taskController.get);//authMiddleware
 router.get('/task/:id_task', taskController.getById);
 router.post('/task', taskController.add);
 router.put('/task/:id_task', taskController.update);

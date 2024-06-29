@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 
 import TaskService from "../services/TaskService";
 
-import { GetSchema } from "../schemas/TaskSchema";
+import { GetSchema, GetByIdSchema, AddSchema, UpdateSchema, UpdateSchemaParams, DeleteSchema } from "../schemas/TaskSchema";
 
 import { Task } from "../models/Task";
 
@@ -13,7 +13,7 @@ class TaskController{
         
     }
 
-   async get(Req: Request, Res: Response) {
+    async get(Req: Request, Res: Response) {
         
 
 
@@ -35,82 +35,83 @@ class TaskController{
         
     }
 
-    getById(Req: Request, Res: Response) {
+    async getById(Req: Request, Res: Response) {
         const { id_task } = Req.params;
 
-        if (id_task) {
+        try {
+
+            await GetByIdSchema.validate(Req.params);
 
             const result = taskService.getById(id_task);
+
             Res.json(result);
-            Res.status(200);
 
-        }else{
-            Res.json({error:"invalid id_task param"});
-            Res.status(401);
-        }
-    }
-    add(Req: Request, Res: Response){
-        const {id, descricao, data, status} = Req.body;
-
-        if(id && descricao && data && status) {
-            if(status === "in_progress" || status === "completed"){
-                const result = taskService.add(Req.body);
-                Res.json(result);
-                Res.status(201);
-            }else{
-                Res.json({error: "Invalid status: completed or in_progress"});
-                Res.status(401);
-            }
-
-        }else{
-            Res.json({error: "Invalid parameters"});
+            
+        } catch (error) {
+            Res.json({error: error});
             Res.status(401);
         }
 
+
+           
+
+
     }
+    async add(Req: Request, Res: Response){
 
-    update(Req: Request, Res: Response) {
-        const { id, descricao, data, status } = Req.body;
-        const { id_task } = Req.params;
+        try {
 
-        if (id && descricao && data && status && id_task) {
+            await AddSchema.validate(Req.body);
 
-            if(status === "in_progress" || status === "completed") {
-
-                const result = taskService.update(Req.body, id_task);
-
-                if(Object.keys(result).length > 0){
-                    Res.json(result);
-                }else{
-                    Res.json({error: "Task not found"});
-                    Res.status(404);
-                }
-
-            }else{
-                Res.json({error: "Invalid status parameter"});
-                Res.status(401);
-            }
-
-        }else{
-            Res.json({error: "Invalid parameters"});
+            const result = taskService.add(Req.body);
+            Res.json(result);
+            Res.status(201);
+        } catch (error) {
+            Res.json({error: error});
             Res.status(401);
         }
+
     }
 
-    delete(Req: Request, Res: Response){
-        const {id_task} = Req.params;
+    async update(Req: Request, Res: Response) {
 
-        if(id_task){
+           try {
+
+              const { id_task } = Req.params;
+
+              await UpdateSchema.validate(Req.body);
+              await UpdateSchemaParams.validate(id_task);
+
+              const result = taskService.update(Req.body, id_task);
+
+              if(Object.keys(result).length > 0){
+                  Res.json(result);
+              }else{
+                  Res.json({error: "Task not found"});
+                  Res.status(404);
+              }
+            
+           } catch (error) {
+            Res.json({error: error});
+            Res.status(400);
+           }
+
+
+
+    }
+
+    async delete(Req: Request, Res: Response){
+
+        try {
+            const {id_task} = Req.params;
+            
+            await DeleteSchema.validate(id_task);
 
             const result = taskService.delete(id_task);
 
-            Res.json(result);
-
-        }else{
-            Res.json({error: "id_task is required in para"});
-            Res.status(401);
+        } catch (error) {
+            Res.json({error: error});
         }
-
     }
 }
 

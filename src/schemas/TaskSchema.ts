@@ -12,11 +12,11 @@ export const GetSchema = object().shape({
 });
 
 export const GetByIdSchema = object().shape({
-        id_task: string().required()
+        id_task: string().required().uuid()
 });
 
 export const AddSchema = object().shape({
-        id: string().required('Id é Obrigatorio!'),
+        //id: string().required('Id é Obrigatorio!'), Substituido pelo uuid
         descricao: string().required('Descrição é obrigatorio"'),
         data: string().required('Data é obrigatorio!'),
         status: string().required('Status é Obrigatorio!').test('addIsValid', (status) => {

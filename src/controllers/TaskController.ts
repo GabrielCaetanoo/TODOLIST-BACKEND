@@ -6,6 +6,8 @@ import { GetSchema, GetByIdSchema, AddSchema, UpdateSchema, UpdateSchemaParams, 
 
 import { Task } from "../models/Task";
 
+import { v4 as uuidv4 } from "uuid";
+
 const taskService = new TaskService();
 
 class TaskController{
@@ -62,6 +64,10 @@ class TaskController{
         try {
 
             await AddSchema.validate(Req.body);
+
+            const id = uuidv4();
+
+            Req.body.id = id;
 
             const result = taskService.add(Req.body);
             Res.json(result);

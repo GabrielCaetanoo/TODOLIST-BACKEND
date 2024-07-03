@@ -1,12 +1,18 @@
 import {Request, Response} from "express";
+import multer from "multer";
+import { v4 as uuidv4 } from "uuid";
+
 
 import TaskService from "../services/TaskService";
 
-import { GetSchema, GetByIdSchema, AddSchema, UpdateSchema, UpdateSchemaParams, DeleteSchema } from "../schemas/TaskSchema";
+import storage from "../utils/storage";
 
-import { Task } from "../models/Task";
-
-import { v4 as uuidv4 } from "uuid";
+import { GetSchema, 
+         GetByIdSchema, 
+         AddSchema, 
+         UpdateSchema, 
+         UpdateSchemaParams, 
+         DeleteSchema } from "../schemas/TaskSchema";
 
 const taskService = new TaskService();
 
@@ -60,6 +66,9 @@ class TaskController{
 
     }
     async add(Req: Request, Res: Response){
+
+        console.log(Req.file);
+        return;
 
         try {
 

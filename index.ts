@@ -16,6 +16,14 @@ const option = {
 
 const token = jwt.sign(payload, secret, option);
 
+try {
+    const decoded = jwt.verify(token, secret);
+    console.log(decoded); // Verifica se o token é válido e retorna o payload do usuário.
+} catch (err: any) {
+    console.log({error: err.message});
+    
+}
+
 console.log(token);
 
 
